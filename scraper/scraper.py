@@ -8,6 +8,8 @@ print guardian_articles
 reddit_articles = content_processor.extract_content('https://www.reddit.com/r/news/', 'data-href-url="(.+?)"')
 print reddit_articles
 
+bbc_articles = content_processor.extract_content('http://www.bbc.co.uk/news', 'href="(.+?)" class="title-link"')
+print bbc_articles
 
 
 
