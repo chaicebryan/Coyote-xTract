@@ -13,7 +13,7 @@ print bbc_articles
 
 ign_articles = content_processor.extract_content('http://uk.ign.com', 'href="http://www.ign.com/articles/(.+?)"')
 finishedIgnLinks = []
-for links in ign_articles:
+for article in ign_articles:
     newLink = 'http://www.ign.com/articles/' + links
     finishedIgnLinks.append(newLink)
 print finishedIgnLinks
