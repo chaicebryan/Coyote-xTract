@@ -1,4 +1,9 @@
+import sys
+sys.path.insert(0, '/home/chaice/Development/projects/quavertrail/repository/connect.py')
+
 from ContentProcessor import ContentProcessor
+from repository.connect import Connection
+
 
 content_processor = ContentProcessor()
 
@@ -17,6 +22,34 @@ for article in ign_articles:
     newLink = 'http://www.ign.com/articles/' + article
     finishedIgnLinks.append(newLink)
 print finishedIgnLinks
+
+class Scraper:
+
+    running = False
+
+
+    def start(self):
+        try:
+            self.conn = Connection('postgres', 'postgres', '1234', 'localhost', '5432')
+            self.cursor = self.conn.begin()
+        except:
+            print 'Unable to connect to database'
+
+        self.run()
+
+
+    def run(self):
+        sources = self.load_sources()
+
+        for source in sources:
+            content_processor.extract_content(source[1], source[2])
+
+
+    def load_sources(self):
+        self.cursor.execute('SELECT * FROM sources;')
+        return self.cursor.fetch_all()
+
+
 
 
 
