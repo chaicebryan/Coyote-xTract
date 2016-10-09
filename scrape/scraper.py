@@ -1,5 +1,6 @@
 from ContentProcessor import ContentProcessor
 from repository.connect import Connection
+import logging as logger
 
 class Scraper:
 
@@ -11,8 +12,7 @@ class Scraper:
             self.conn = Connection('main', 'quavertrail', '1234', 'localhost', '5432')
             self.cursor = self.conn.begin()
         except:
-            print 'Unable to connect to database'
-
+            logger.error('Unable to connect to database')
         self.run()
 
 
@@ -20,9 +20,9 @@ class Scraper:
         sources = self.load_sources()
 
         for source in sources:
+            logger.info('Extracting content from ' + source[1])
             self.content_processor.extract_content(source[1], source[2])
-        print 'Processing of sources complete'
-
+        logger.info('Processing of sources complete')
 
     def load_sources(self):
         self.cursor.execute('SELECT * FROM sources;')
