@@ -1,11 +1,11 @@
-from data_processing import ContentProcessor
+from data_processing import ContentExtractor
 from repository.connect import Connection
 import logging as logger
 
 class Scraper:
 
     def __init__(self):
-        self.content_processor = ContentProcessor()
+        self.content_processor = ContentExtractor()
 
     def start(self):
         try:
@@ -21,7 +21,8 @@ class Scraper:
 
         for source in sources:
             logger.info('Extracting content from ' + source[1])
-            self.content_processor.extract_urls(source[1], source[2])
+            articles = self.content_processor.extract_urls(source[1], source[2])
+            self.content_processor.process_articles(articles)
         logger.info('Processing of sources complete')
 
     def load_sources(self):

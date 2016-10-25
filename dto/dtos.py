@@ -11,11 +11,5 @@ class Article:
         self.category = category
         self.source = source
 
-class GuardianArticle(Article):
 
-class BBCArticle(Article):
-
-class RedditArticle(Article):
-
-class IGNArticle(Article):
 

@@ -3,7 +3,7 @@ import urllib
 from goose import Goose
 from dto.dtos import Article
 
-class ContentExtactor:
+class ContentExtractor:
 
     def __init__(self):
         self.extractor = Goose()
@@ -23,9 +23,10 @@ class ContentExtactor:
     def process_articles(self, domain_url_list):
         for url in domain_url_list:
             article_info = self.extract_article_info(url)
-            article = self.to_DTO(article_info)
+            article = self.to_dto(article_info)
+            print article.title + " " + str(article.author)
 
-    def to_DTO(self, article_info):
+    def to_dto(self, article_info):
         article = Article()
         article.title = article_info.title
         article.text = article_info.cleaned_text
