@@ -2,6 +2,7 @@ import re as rgx
 import urllib
 from goose import Goose
 from dto.dtos import Article
+import logging as logger
 
 class ContentExtractor:
 
@@ -24,13 +25,16 @@ class ContentExtractor:
         for url in domain_url_list:
             article_info = self.extract_article_info(url)
             article = self.to_dto(article_info)
-            print article.title + " " + str(article.author)
+            logger.info("Processing article: " + url)
 
     def to_dto(self, article_info):
         article = Article()
-        article.title = article_info.title
-        article.text = article_info.cleaned_text
-        article.author = article_info.authors
-        article.creation_date = article_info.publish_date
+        try:
+            article.title = article_info.title
+            article.text = article_info.cleaned_text
+            article.author = article_info.authors
+            article.creation_date = article_info.publish_date
+        except:
+            logger.error("Failed to extract content from " + article_info.final_url)
         return article
 
